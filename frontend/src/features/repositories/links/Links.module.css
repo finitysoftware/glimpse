@@ -1,0 +1,312 @@
+/* Access links: the list of links, the link form with branches, history and file visibility. */
+.linkItem {
+  border-bottom: 1px solid var(--a-border);
+  padding: 16px 0;
+}
+.linkRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.linkRow > div {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.linkRow strong {
+  font-size: 13px;
+}
+.linkRow p {
+  font-size: 11px;
+}
+.revealedUrl {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 14px;
+  background: var(--a-surface);
+  border: 1px solid var(--a-border);
+  border-radius: 10px;
+}
+.revealedUrl label {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+  color: var(--a-muted);
+  font-size: 12px;
+}
+.revealedUrl input {
+  width: 100%;
+  font-size: 12px;
+}
+@media (max-width: 650px) {
+  .linkRow {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .linkRow .linkDetails {
+    flex-basis: 100%;
+  }
+  .revealedUrl {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+/* Link form: branches, history and file visibility sections */
+.accessSection {
+  border: 1px solid var(--a-border);
+  border-radius: 14px;
+  background: var(--a-panel);
+  margin: 22px 0 0;
+  padding: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+.sectionCount {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--a-muted);
+  border: 1px solid var(--a-border-strong);
+  border-radius: 20px;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+.sectionCountActive {
+  color: var(--a-blue-dark);
+  background: var(--a-blue-soft);
+  border-color: var(--a-blue-line);
+}
+.branchTools {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+  color: var(--a-muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.branchTiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 8px;
+  max-height: 292px;
+  overflow: auto;
+}
+.branchTile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding-right: 12px;
+  border: 1px solid var(--a-border);
+  border-radius: 10px;
+  background: var(--a-panel);
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+.branchTile label {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 10px 0 10px 12px;
+  cursor: pointer;
+}
+.branchTile:hover {
+  border-color: #b9c4d8;
+}
+.branchTileOn,
+.branchTileOn:hover {
+  border-color: var(--a-blue);
+  background: var(--a-blue-soft);
+}
+.branchTile input[type='checkbox'] {
+  accent-color: var(--a-blue);
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  flex-shrink: 0;
+}
+.branchTile:has(input:disabled) {
+  opacity: 0.6;
+}
+.branchTile:has(input:disabled) label {
+  cursor: not-allowed;
+}
+.branchTileName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--a-mono);
+  font-size: 12.5px;
+  color: var(--a-text-2);
+}
+.branchTileOn .branchTileName {
+  color: var(--a-text);
+}
+.defaultTag {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--a-green-dark);
+  border: 1px solid var(--a-green-line);
+  background: var(--a-green-soft);
+  border-radius: 20px;
+  padding: 2px 8px;
+}
+.moreBranches {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+.ghostButton {
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--a-blue-dark);
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px dashed var(--a-blue-line);
+  background: transparent;
+}
+.ghostButton:hover:not(:disabled) {
+  background: var(--a-blue-soft);
+}
+.historyToggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+.historyText {
+  display: grid;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+.historyText strong {
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.historyText span {
+  color: var(--a-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.switchInput {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.switchTrack {
+  position: relative;
+  width: 42px;
+  height: 24px;
+  border-radius: 20px;
+  background: #d3dae6;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.switchTrack::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.25);
+  transition:
+    left 0.15s,
+    background 0.15s;
+}
+.switchInput:checked + .switchTrack {
+  background: var(--a-blue);
+}
+.switchInput:checked + .switchTrack::after {
+  left: 21px;
+  background: white;
+}
+.switchInput:focus-visible + .switchTrack {
+  outline: 2px solid var(--a-blue);
+  outline-offset: 3px;
+}
+.switchInput:disabled + .switchTrack {
+  opacity: 0.55;
+}
+.branchState {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--a-muted);
+  text-align: right;
+}
+.branchState b {
+  color: var(--a-text);
+  font-weight: 600;
+}
+.optionCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+.filePreview {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+  border: 1px solid var(--a-border);
+  border-radius: 10px;
+  background: var(--a-surface);
+}
+.filePreview li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  font-family: var(--a-mono);
+  font-size: 11.5px;
+  color: var(--a-text-2);
+  overflow-wrap: anywhere;
+}
+.filePreview svg {
+  color: var(--a-faint);
+  flex-shrink: 0;
+}
+.filePreview .fileMore {
+  color: var(--a-muted);
+  font-family: inherit;
+}
+.optionFoot {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+}
+.optionMeta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--a-faint);
+}
+@media (max-width: 699px) {
+  .sectionCount {
+    margin-left: 46px;
+  }
+  .branchTiles {
+    grid-template-columns: 1fr;
+  }
+  .branchState {
+    margin-left: 0;
+    text-align: left;
+    flex-basis: 100%;
+  }
+}

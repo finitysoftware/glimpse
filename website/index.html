@@ -1,0 +1,400 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="page.title">Glimpse - Share private GitHub and GitLab repositories</title>
+  <meta name="description" content="Share a private GitHub or GitLab repository with one read-only link. Visitors browse code, files and history without an account, and you control access.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <!-- The canonical domain also appears in robots.txt, sitemap.xml and the structured data below; verify-package.mjs checks they agree. -->
+  <link rel="canonical" href="https://glimpse.finitysoftware.io/">
+  <!-- One indexed language: the SH translation switches in the browser on the same URL, so it has no URL of its own to announce. -->
+  <link rel="alternate" hreflang="en" href="https://glimpse.finitysoftware.io/">
+  <link rel="alternate" hreflang="x-default" href="https://glimpse.finitysoftware.io/">
+  <meta name="author" content="Finity Software">
+  <meta name="application-name" content="Glimpse">
+  <meta name="apple-mobile-web-app-title" content="Glimpse">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="color-scheme" content="light">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Glimpse">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://glimpse.finitysoftware.io/">
+  <meta property="og:title" content="Glimpse - Share private GitHub and GitLab repositories">
+  <meta property="og:description" content="Share a private GitHub or GitLab repository with one read-only link. Visitors browse code, files and history without an account, and you control access.">
+  <meta property="og:image" content="https://glimpse.finitysoftware.io/assets/images/og-image.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Glimpse: share private GitHub and GitLab repositories with one link.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Glimpse - Share private GitHub and GitLab repositories">
+  <meta name="twitter:description" content="Share a private GitHub or GitLab repository with one read-only link. Visitors browse code, files and history without an account, and you control access.">
+  <meta name="twitter:image" content="https://glimpse.finitysoftware.io/assets/images/og-image.png">
+  <meta name="twitter:image:alt" content="Glimpse: share private GitHub and GitLab repositories with one link.">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- Mirrors the visible FAQ word for word; update both together. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://glimpse.finitysoftware.io/#organization",
+        "name": "Finity Software",
+        "url": "https://finitysoftware.io/"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://glimpse.finitysoftware.io/#website",
+        "url": "https://glimpse.finitysoftware.io/",
+        "name": "Glimpse",
+        "alternateName": "Glimpse by Finity Software",
+        "description": "Share private GitHub and GitLab repositories with one read-only link.",
+        "inLanguage": "en",
+        "publisher": {
+          "@id": "https://glimpse.finitysoftware.io/#organization"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://glimpse.finitysoftware.io/#webpage",
+        "url": "https://glimpse.finitysoftware.io/",
+        "name": "Glimpse - Share private GitHub and GitLab repositories",
+        "description": "Share a private GitHub or GitLab repository with one read-only link. Visitors browse code, files and history without an account, and you control access.",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://glimpse.finitysoftware.io/#website"
+        },
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://glimpse.finitysoftware.io/assets/images/og-image.png",
+          "width": 1200,
+          "height": 630
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://glimpse.finitysoftware.io/#faq",
+        "isPartOf": {
+          "@id": "https://glimpse.finitysoftware.io/#webpage"
+        },
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is Glimpse?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Glimpse is a space for sharing and exploring private GitHub and GitLab repositories. Each account connects its own GitHub or GitLab token and manages its own links, while visitors follow a link to browse permitted content in a simple web interface."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Glimpse work with GitLab?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Connect GitLab.com or your own self-managed GitLab instance with a read_api token, alongside GitHub or on its own. Projects from both platforms appear in one list, and you can filter them by platform."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do visitors need a GitHub or GitLab account?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. An active access link is all they need. Visitors can browse permitted files and branches directly in their browser, without signing in to GitHub or GitLab or installing tools."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I share a private GitHub repository without adding a collaborator?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Connect your GitHub token in Glimpse, create an access link for the repository and send it. The visitor opens the link in a browser and reads the code without a GitHub account or a collaborator invitation. You can revoke the link at any time, and the same works for GitLab projects."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can anyone change my code?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Access through Glimpse is read-only: visitors cannot modify the repository or push commits. Anyone who can view content can also copy it, so only share links with people you trust."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I control the scope and duration of access?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Choose a name, expiry date, allowed branches and history permissions for each link. Revoke a link or temporarily pause sharing for the entire repository. Expired or revoked links no longer open the content."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I share only one branch of a private repository?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Each link lists the branches it may open, and you can also limit which files each branch shows. Other branches stay hidden, and new branches appear only after you allow them."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Glimpse clone my repository?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Content is read through the GitHub or GitLab API, with a limited cache for faster browsing. Your tokens stay on the server and are never passed to visitors."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script src="assets/js/translations.js" defer=""></script>
+  <script src="assets/js/main.js" defer=""></script>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main" data-i18n="nav.skip">Skip to content</a>
+  <header class="header" id="header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#top" aria-label="Glimpse home" data-i18n-aria="nav.home"><span class="brand-mark"><i data-icon="eye"></i></span><span>glimpse<span class="brand-dot">.</span></span></a>
+      <nav class="nav" id="navigation" aria-label="Main navigation" data-i18n-aria="nav.label">
+        <a href="#mogucnosti" data-i18n="nav.features">Features</a><a href="#kako-radi" data-i18n="nav.how">How it works</a><a href="#sigurnost" data-i18n="nav.security">Security</a><a href="#faq">FAQ</a>
+      </nav>
+      <a class="button button-primary nav-cta" href="/login" data-panel-link="" data-i18n="nav.panel">Open dashboard <i data-icon="arrow-up-right"></i></a>
+      <div class="language-picker" id="language-picker">
+        <span class="sr-only" id="language-label" data-i18n="nav.language">Page language</span>
+        <button class="language-trigger" id="language-toggle" type="button" aria-labelledby="language-label language-current" aria-haspopup="menu" aria-expanded="false" aria-controls="language-menu" disabled><span id="language-current">EN</span><i data-icon="chevron-down"></i></button>
+        <div class="language-menu" id="language-menu" role="menu" aria-labelledby="language-label" hidden>
+          <button class="language-option" type="button" role="menuitemradio" aria-checked="true" tabindex="-1" data-language="en"><span class="language-code">EN</span><i data-icon="check"></i></button>
+          <button class="language-option" type="button" role="menuitemradio" aria-checked="false" tabindex="-1" data-language="sh"><span class="language-code">SH</span><i data-icon="check"></i></button>
+        </div>
+      </div>
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu" aria-controls="navigation" aria-expanded="false" data-i18n-aria="nav.open"><i data-icon="menu"></i></button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-dots" aria-hidden="true"></div>
+      <div class="container hero-content">
+        <a class="eyebrow-pill" href="#mogucnosti"><span class="pill pill-green" data-i18n="hero.badgeTag"><span class="status-dot"></span>Read-only</span><span data-i18n="hero.badge">PRIVATE CODE. SHARED PERSPECTIVE.</span><i data-icon="arrow-right"></i></a>
+        <h1 id="hero-title" data-i18n="hero.title">Your project.<br><span data-i18n="hero.subtitle">A new perspective.</span></h1>
+        <p class="hero-description" data-i18n="hero.description hero.descriptionEnd">From a private GitHub or GitLab repository to a shared understanding.<br class="desktop-break"> Share code with one link. Stay in control of access.</p>
+        <div class="hero-actions"><a class="button button-primary button-large" href="/login" data-panel-link="" data-i18n="cta.open">Open Glimpse <i data-icon="arrow-up-right"></i></a><a class="button button-secondary button-large" href="#demo" data-i18n="hero.explore"><i data-icon="eye"></i> Explore the experience</a></div>
+        <div class="hero-checks"><span data-i18n="hero.noAccount"><i data-icon="check"></i> No GitHub or GitLab account needed for visitors</span><span data-i18n="hero.readOnly"><i data-icon="check"></i> Read-only access</span><span data-i18n="hero.rules"><i data-icon="check"></i> Your rules</span></div>
+      </div>
+
+      <div class="container demo-wrap" id="demo">
+        <div class="float-card float-link" aria-hidden="true"><span class="float-icon"><i data-icon="link"></i></span><span><strong data-i18n="float.linkTitle">Access link active</strong><small data-i18n="float.linkBody">Expires in 7 days · main only</small></span></div>
+        <div class="float-card float-visitor" aria-hidden="true"><span class="float-icon"><i data-icon="user"></i></span><span><strong data-i18n="float.visitorTitle">Visitor opened your link</strong><small data-i18n="float.visitorBody">No account. No install.</small></span></div>
+        <div class="demo">
+          <div class="window-bar"><div class="window-start"><div class="window-dots" aria-hidden="true"><b></b><b></b><b></b></div><span class="demo-label" data-i18n="demo.label">INTERACTIVE DEMO</span></div><div class="address"><i data-icon="lock"></i><span>glimpse.finitysoftware.io/s/<b>6e1ed7fc…a6ce</b></span></div><span></span></div>
+          <div class="demo-toolbar"><span class="repo-icon"><i data-icon="code"></i></span><span class="repo-name">your-next-big-idea</span><span class="pill pill-line" data-i18n="demo.private">Private</span><span class="pill pill-green read-only" data-i18n="hero.readOnly"><span class="status-dot"></span>Read-only access</span></div>
+          <div class="demo-body">
+            <aside class="file-sidebar" aria-label="Demo files" data-i18n-aria="demo.files">
+              <div class="branch-picker">
+                <button class="branch-button" id="branch-toggle" type="button" aria-expanded="false" aria-controls="branch-menu"><i data-icon="branch"></i>main<span class="branch-chevron"><i data-icon="chevron-down"></i></span></button>
+                <div class="branch-menu" id="branch-menu" hidden>
+                  <div class="branch-option"><i data-icon="branch"></i>main<i data-icon="check"></i></div>
+                  <p class="branch-note" data-i18n="demo.branchNote"><i data-icon="lock"></i>2 more branches exist. This link only opens main.</p>
+                </div>
+              </div>
+              <div class="folder"><i data-icon="chevron-down"></i><i data-icon="folder"></i> your-next-big-idea</div>
+              <div class="file-list"><button class="file-button selected" type="button" data-file="welcome" aria-pressed="true"><i data-icon="file-code"></i>welcome.ts</button><button class="file-button" type="button" data-file="readme" aria-pressed="false"><i data-icon="file"></i>README.md</button><button class="file-button" type="button" data-file="config" aria-pressed="false"><i data-icon="file-code"></i>config.json</button></div>
+              <div class="sidebar-note" data-i18n="demo.control"><i data-icon="shield"></i> Your code. Your control.</div>
+            </aside>
+            <div class="editor">
+              <div class="editor-toolbar"><span class="editor-file"><i data-icon="file-code"></i><span id="file-name">welcome.ts</span></span><div class="segmented view-controls" aria-label="Demo project view" data-i18n-aria="demo.views"><button class="active" type="button" data-view="code" aria-pressed="true"><i data-icon="code"></i> Code</button><button type="button" data-view="history" aria-pressed="false"><i data-icon="history"></i> History</button></div></div>
+              <pre class="code" id="code-view" aria-label="Contents of demo file welcome.ts"><code id="demo-code">// Great work deserves to be seen.
+import { Glimpse } from './glimpse';
+
+const project = new Glimpse({
+  repository: 'your-next-big-idea',
+  visibility: 'private',
+  access: 'read-only',
+});
+
+await project.share({
+  with: 'the right people',
+  possibilities: Infinity,
+});
+
+// One link. A whole new perspective.</code></pre>
+              <div class="demo-history" id="history-view" hidden=""><p class="history-title" data-i18n="demo.historyTitle">Project history</p><div class="commit"><span class="commit-icon"><i data-icon="commit"></i></span><span><strong>Add sharing configuration</strong><small>a7e32f1 · main</small></span><span class="diff-counts"><b>+12</b><em>-2</em></span></div><div class="commit"><span class="commit-icon"><i data-icon="commit"></i></span><span><strong>Create welcome experience</strong><small>c92b408 · main</small></span><span class="diff-counts"><b>+24</b><em>-0</em></span></div><div class="commit"><span class="commit-icon"><i data-icon="commit"></i></span><span><strong>Initial commit</strong><small>f13d9a2 · main</small></span><span class="diff-counts"><b>+38</b><em>-0</em></span></div><p class="history-note" data-i18n="demo.historyNote">Example commits and changes in a shared project.</p></div>
+              <div class="editor-footer"><span><span class="status-dot"></span><span id="file-type">TypeScript</span></span><span>UTF-8 · Powered by Glimpse <i data-icon="eye"></i></span></div>
+              <span class="sr-only" id="demo-announcement" role="status"></span>
+            </div>
+          </div>
+        </div>
+        <p class="demo-hint" data-i18n="demo.hint"><span class="status-dot"></span>Take a look inside - select a file, switch the branch or open History.</p>
+      </div>
+
+      <div class="container use-cases"><p data-i18n="uses.label">BUILT FOR YOUR NEXT</p><div><span><i data-icon="code"></i> Code review</span><span data-i18n="uses.client"><i data-icon="monitor"></i> Client walkthrough</span><span data-i18n="uses.team"><i data-icon="branch"></i> Team handoff</span><span data-i18n="uses.portfolio"><i data-icon="sparkles"></i> Project showcase</span></div></div>
+
+      <div class="platforms">
+        <div class="container platforms-inner">
+          <p><strong data-i18n="platforms.title">Works where your code already lives.</strong> <span data-i18n="platforms.body">Connect one platform or both.</span></p>
+          <div class="platform-list"><span class="platform"><span class="platform-mark github">GH</span>GitHub</span><span class="platform"><span class="platform-mark gitlab">GL</span>GitLab.com</span><span class="platform" data-i18n="platforms.selfManaged"><span class="platform-mark self-managed">GL</span>Self-managed GitLab</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container section" id="mogucnosti" aria-labelledby="features-title">
+      <div class="section-intro"><div><p class="kicker" data-i18n="features.kicker">LESS FRICTION. MORE COLLABORATION.</p><h2 id="features-title" data-i18n="features.title">Everything you want to share.<br><span data-i18n="features.subtitle">Only what you choose.</span></h2></div><p class="lead" data-i18n="features.intro features.introEnd">From the first look to the latest commit.<br> One place to see your project clearly.</p></div>
+      <div class="feature-grid">
+        <article class="feature-card span-3">
+          <div class="feature-top"><span class="icon-box"><i data-icon="link"></i></span><span class="feature-tag" data-i18n="sharing.tag">Effortless sharing</span></div>
+          <h3 data-i18n="sharing.title">One link. An open door.</h3>
+          <p data-i18n="sharing.body">Share a private GitHub or GitLab repository through an access link. Visitors open your project without an account, invitations or extra steps.</p>
+          <div class="feature-visual">
+            <div class="link-field"><i data-icon="lock"></i><span>glimpse.finitysoftware.io/s/<b>8e261061…5944</b></span><button class="copy-button" type="button" data-copy="https://glimpse.finitysoftware.io/s/8e26106e070060326816b62563675944"></button></div>
+            <div class="visual-checks"><span data-i18n="sharing.noAccount"><i data-icon="check"></i>No account</span><span data-i18n="sharing.noInvites"><i data-icon="check"></i>No invitations</span><span data-i18n="sharing.anyBrowser"><i data-icon="check"></i>Any browser</span></div>
+          </div>
+        </article>
+        <article class="feature-card span-3">
+          <div class="feature-top"><span class="icon-box"><i data-icon="code"></i></span><span class="feature-tag" data-i18n="code.tag">Repository browser</span></div>
+          <h3 data-i18n="code.title">Your code, at its best.</h3>
+          <p data-i18n="code.body">A folder tree, text file browsing and syntax highlighting. Everything someone needs to find their way around your project.</p>
+          <div class="feature-visual"><div class="language-tags" aria-label="Examples of supported languages" data-i18n-aria="code.languages"><span><i class="lang-dot typescript"></i>TypeScript</span><span><i class="lang-dot php"></i>PHP</span><span><i class="lang-dot python"></i>Python</span><span><i class="lang-dot csharp"></i>C#</span><span class="more" data-i18n="code.more">+ more</span></div></div>
+        </article>
+        <article class="feature-card span-2">
+          <div class="feature-top"><span class="icon-box"><i data-icon="monitor"></i></span><span class="feature-tag">Preview per file</span></div>
+          <h3 data-i18n="preview.title">Small details. A bigger picture.</h3>
+          <p data-i18n="preview.body">Preview per file gives you a focused view of each individual file. Explore what matters to you, straight from the project tree.</p>
+          <div class="feature-visual"><div class="mini-flow" aria-hidden="true"><span data-i18n="preview.select"><i data-icon="file-code"></i>Select a file</span><i data-icon="arrow-right"></i><span><i data-icon="eye"></i>Preview</span></div></div>
+        </article>
+        <article class="feature-card span-2">
+          <div class="feature-top"><span class="icon-box"><i data-icon="history"></i></span><span class="feature-tag">History &amp; diff</span></div>
+          <h3 data-i18n="history.title">Every change tells a story.</h3>
+          <p data-i18n="history.body">Follow commits, browse changed files and compare differences in a diff. Open an earlier revision or explore the history of a specific file.</p>
+          <div class="feature-visual"><div class="mini-diff" aria-hidden="true"><div class="diff-head">config.json · a7e32f1</div><div class="diff-del">-  "access": "private"</div><div class="diff-add">+  "access": "read-only",</div><div class="diff-add">+  "history": true</div></div></div>
+        </article>
+        <article class="feature-card span-2">
+          <div class="feature-top"><span class="icon-box"><i data-icon="branch"></i></span><span class="feature-tag" data-i18n="branches.tag">Branch permissions</span></div>
+          <h3 data-i18n="branches.title">Share the right perspective.</h3>
+          <p data-i18n="branches.body">Choose which branches each link can open and whether history is available. New branches stay hidden until you approve them.</p>
+          <div class="feature-visual">
+            <div class="branch-rows">
+              <div class="branch-row"><i data-icon="branch"></i><span id="branch-row-main">main</span><button class="switch" type="button" role="switch" aria-checked="true" aria-labelledby="branch-row-main"></button></div>
+              <div class="branch-row"><i data-icon="branch"></i><span id="branch-row-new">feature/new</span><span class="pill pill-amber" data-i18n="branches.new">New</span><button class="switch" type="button" role="switch" aria-checked="false" aria-labelledby="branch-row-new"></button></div>
+            </div>
+          </div>
+        </article>
+        <article class="feature-card span-6 feature-wide">
+          <div>
+            <div class="feature-top"><span class="icon-box"><i data-icon="zap"></i></span><span class="feature-tag" data-i18n="speed.tag">Fast browsing</span></div>
+            <h3 data-i18n="speed.title">Less waiting. More exploring.</h3>
+            <p data-i18n="speed.body">Revision-based caching speeds up repeat visits. Use Refresh to check the latest project state and keep exploring.</p>
+          </div>
+          <div>
+            <div class="cache-steps">
+              <div><small data-i18n="speed.first">First visit</small><strong data-i18n="speed.firstValue"><i data-icon="download"></i>Read via API</strong><span>GitHub · GitLab</span></div>
+              <div><small data-i18n="speed.cached">Cached</small><strong data-i18n="speed.cachedValue"><i data-icon="layers"></i>By revision</strong><span>a7e32f1</span></div>
+              <div><small data-i18n="speed.next">Next visit</small><strong data-i18n="speed.nextValue"><i data-icon="zap"></i>Straight away</strong><span data-i18n="speed.sameRevision">same revision</span></div>
+            </div>
+            <div class="refresh-row"><span id="refresh-status"></span><button class="button button-secondary button-small" id="refresh-button" type="button"><i data-icon="refresh"></i> Refresh</button></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="workflow-band" id="kako-radi" aria-labelledby="workflow-title"><div class="container section workflow">
+      <div>
+        <p class="kicker" data-i18n="workflow.kicker">FROM REPOSITORY TO FIRST IMPRESSION</p>
+        <h2 id="workflow-title" data-i18n="workflow.title">Three steps.<br><span data-i18n="workflow.titleEnd">And you’re on the same page.</span></h2>
+        <p class="lead" data-i18n="workflow.intro">You set up access. Glimpse takes care of the view.</p>
+        <div class="steps" id="steps" role="tablist" aria-label="Three steps" data-i18n-aria="workflow.steps" aria-orientation="vertical">
+          <button class="step active" id="step-tab-1" type="button" role="tab" aria-selected="true" aria-controls="step-panel-1" aria-labelledby="step-title-1" aria-describedby="step-body-1" data-step="1"><span class="step-number">01</span><span class="step-text"><span class="step-title" id="step-title-1" data-i18n="step1.title">Connect your project</span><span class="step-body" id="step-body-1" data-i18n="step1.body">Sign in and add your GitHub or GitLab token in Connections, or both. Repositories from both platforms appear together in your dashboard.</span><span class="step-detail">GitHub · GitLab <i data-icon="arrow-right"></i> Glimpse</span></span><span class="step-progress" aria-hidden="true"></span></button>
+          <button class="step" id="step-tab-2" type="button" role="tab" aria-selected="false" aria-controls="step-panel-2" aria-labelledby="step-title-2" aria-describedby="step-body-2" tabindex="-1" data-step="2"><span class="step-number">02</span><span class="step-text"><span class="step-title" id="step-title-2" data-i18n="step2.title">Set your own rules</span><span class="step-body" id="step-body-2" data-i18n="step2.body">Create a link, choose branches and the files each branch shows, set an expiry and decide who can see history. Each link keeps its own rules.</span><span class="step-detail" data-i18n="step2.detail">Your link, your rules <i data-icon="arrow-right"></i></span></span><span class="step-progress" aria-hidden="true"></span></button>
+          <button class="step" id="step-tab-3" type="button" role="tab" aria-selected="false" aria-controls="step-panel-3" aria-labelledby="step-title-3" aria-describedby="step-body-3" tabindex="-1" data-step="3"><span class="step-number">03</span><span class="step-text"><span class="step-title" id="step-title-3" data-i18n="step3.title">Share a new perspective</span><span class="step-body" id="step-body-3" data-i18n="step3.body">Send the link to a client or teammate. Your project is ready to explore in the browser, with no extra sign-in.</span><span class="step-detail" data-i18n="step3.detail">One click to your project <i data-icon="arrow-right"></i></span></span><span class="step-progress" aria-hidden="true"></span></button>
+        </div>
+      </div>
+
+      <div class="step-stage">
+        <div class="step-panel" id="step-panel-1" role="tabpanel" aria-labelledby="step-tab-1">
+          <div class="stage-head"><span><strong>Connections</strong><small data-i18n="panel1.subtitle">Tokens stay on the server.</small></span><span class="pill pill-green" data-i18n="panel1.count"><span class="status-dot"></span>2 connected</span></div>
+          <div class="connection"><span class="platform-mark github">GH</span><span><strong>GitHub</strong><small data-i18n="panel1.github">Personal access token · read access</small></span><span class="pill pill-green" data-i18n="panel1.connected">Connected</span></div>
+          <div class="connection"><span class="platform-mark gitlab">GL</span><span><strong>GitLab</strong><small data-i18n="panel1.gitlab">GitLab.com or self-managed · read_api token</small></span><span class="pill pill-green" data-i18n="panel1.connected">Connected</span></div>
+          <div class="stage-subhead"><span data-i18n="panel1.repositories">Your repositories</span><div class="segmented segmented-small" id="repository-filter" aria-label="Filter by platform" data-i18n-aria="panel1.filter"><button class="active" type="button" aria-pressed="true" data-filter="all" data-i18n="panel1.all">All</button><button type="button" aria-pressed="false" data-filter="github">GitHub</button><button type="button" aria-pressed="false" data-filter="gitlab">GitLab</button></div></div>
+          <ul class="repository-list" id="repository-list">
+            <li data-platform="github"><span class="platform-mark github">GH</span><span class="mono">your-next-big-idea</span><span class="pill pill-line" data-i18n="demo.private">Private</span></li>
+            <li data-platform="gitlab"><span class="platform-mark gitlab">GL</span><span class="mono">client-portal</span><span class="pill pill-line" data-i18n="demo.private">Private</span></li>
+            <li data-platform="github"><span class="platform-mark github">GH</span><span class="mono">design-system</span><span class="pill pill-line" data-i18n="demo.private">Private</span></li>
+            <li data-platform="gitlab"><span class="platform-mark gitlab">GL</span><span class="mono">mobile-app</span><span class="pill pill-line" data-i18n="demo.private">Private</span></li>
+          </ul>
+        </div>
+
+        <div class="step-panel" id="step-panel-2" role="tabpanel" aria-labelledby="step-tab-2" hidden>
+          <div class="stage-head"><span><strong data-i18n="panel2.title">New access link</strong><small>your-next-big-idea</small></span><span class="pill pill-blue" data-i18n="panel2.draft">Draft</span></div>
+          <div class="link-builder">
+            <div class="field"><label for="link-name" data-i18n="access.name">Link name</label><input class="input" id="link-name" type="text" value="Client review" maxlength="40" autocomplete="off" spellcheck="false"></div>
+            <div class="field"><span class="field-label" id="duration-label" data-i18n="access.duration">Access duration</span><div class="segmented segmented-full" id="duration" role="group" aria-labelledby="duration-label"><button type="button" aria-pressed="false" data-days="1" data-i18n="duration.d1">1 day</button><button class="active" type="button" aria-pressed="true" data-days="7" data-i18n="duration.d7">7 days</button><button type="button" aria-pressed="false" data-days="30" data-i18n="duration.d30">30 days</button></div></div>
+            <fieldset class="field">
+              <legend class="field-label" data-i18n="panel2.branches">Allowed branches</legend>
+              <div class="option-list" id="branch-options">
+                <label class="check-option"><input type="checkbox" value="main" checked><span class="check-box"><i data-icon="check"></i></span>main</label>
+                <label class="check-option"><input type="checkbox" value="develop"><span class="check-box"><i data-icon="check"></i></span>develop</label>
+                <label class="check-option"><input type="checkbox" value="feature/new"><span class="check-box"><i data-icon="check"></i></span>feature/new<span class="pill pill-amber" data-i18n="branches.new">New</span></label>
+              </div>
+            </fieldset>
+            <div class="field">
+              <span class="field-label" data-i18n="access.permissions">Permissions</span>
+              <div class="option-list">
+                <div class="toggle-row"><span id="history-label" data-i18n="access.history">Change history</span><button class="switch" id="history-switch" type="button" role="switch" aria-checked="true" aria-labelledby="history-label"></button></div>
+                <div class="toggle-row"><span>Read-only</span><span class="pill pill-green" data-i18n="panel2.always">Always</span></div>
+              </div>
+            </div>
+            <div class="link-summary">
+              <div class="link-summary-head"><strong id="summary-name">Client review</strong><span class="pill pill-green"><span class="status-dot"></span><span id="summary-expiry"></span></span></div>
+              <div class="link-field"><i data-icon="lock"></i><span>glimpse.finitysoftware.io/s/<b>a337f68a…0fc8</b></span><button class="copy-button" type="button" data-copy="https://glimpse.finitysoftware.io/s/a337f68ae5592a44ff249b33be3c0fc8"></button></div>
+              <div class="link-rules" id="link-rules"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-panel" id="step-panel-3" role="tabpanel" aria-labelledby="step-tab-3" hidden>
+          <div class="stage-head"><span><strong data-i18n="panel3.title">Share it</strong><small data-i18n="panel3.subtitle">Send the link any way you like.</small></span><span class="pill pill-green" data-i18n="access.active"><span class="status-dot"></span>Active</span></div>
+          <div class="link-field"><i data-icon="lock"></i><span>glimpse.finitysoftware.io/s/<b>a337f68a…0fc8</b></span><button class="copy-button" type="button" data-copy="https://glimpse.finitysoftware.io/s/a337f68ae5592a44ff249b33be3c0fc8"></button></div>
+          <div class="visitor-view" aria-hidden="true">
+            <div class="window-bar"><div class="window-start"><div class="window-dots"><b></b><b></b><b></b></div><span class="demo-label" data-i18n="panel3.visitor">VISITOR VIEW</span></div><div class="address"><i data-icon="lock"></i><span>/s/<b>a337f68a…0fc8</b></span></div><span></span></div>
+            <div class="visitor-body">
+              <div class="visitor-sidebar"><div class="visitor-branch"><i data-icon="branch"></i><span id="visitor-branch">main</span></div><div class="visitor-file selected"><i data-icon="file-code"></i>welcome.ts</div><div class="visitor-file"><i data-icon="file"></i>README.md</div><div class="visitor-file"><i data-icon="file-code"></i>config.json</div></div>
+              <div class="visitor-main"><div class="segmented segmented-small"><span class="active"><i data-icon="code"></i> Code</span><span id="visitor-history"><i data-icon="history"></i> History</span></div><div class="visitor-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+            </div>
+          </div>
+          <p class="share-note"><i data-icon="check"></i><span id="share-note"></span></p>
+        </div>
+      </div>
+    </div></section>
+
+    <section class="container section security-section" id="sigurnost" aria-labelledby="security-title">
+      <div class="security-copy"><p class="kicker" data-i18n="security.kicker">PRIVATE BY DESIGN.</p><h2 id="security-title" data-i18n="security.title">Open a window.<br><span data-i18n="security.subtitle">Keep control.</span></h2><p class="lead" data-i18n="security.body">Sharing your project should keep you in control. You decide what’s available, who receives the link and how long access lasts.</p><ul class="security-points"><li><span class="icon-box"><i data-icon="shield"></i></span><span data-i18n="security.readOnlyBody"><strong data-i18n="security.readOnlyTitle">Read-only by design</strong>Your code stays protected from changes through Glimpse.</span></li><li><span class="icon-box"><i data-icon="lock"></i></span><span data-i18n="security.tokenBody"><strong data-i18n="security.tokenTitle">Your tokens stay on the server</strong>Share access to your content while keeping credentials private.</span></li><li><span class="icon-box"><i data-icon="link"></i></span><span data-i18n="security.revokeBody"><strong data-i18n="security.revokeTitle">Access you can revoke</strong>Disable a link or pause sharing for the entire repository.</span></li></ul></div>
+      <div class="access-visual" id="access-visual" role="group" aria-label="Example access link settings" data-i18n-aria="access.label">
+        <div class="access-heading"><span class="icon-box"><i data-icon="shield"></i></span><span><strong data-i18n="access.title">Access on your terms</strong><small data-i18n="access.example">Example access link</small></span><span class="pill" id="access-status"></span></div>
+        <div class="link-field" id="access-link"><i data-icon="lock"></i><span>glimpse.finitysoftware.io/s/<b>6e1ed7fc…a6ce</b></span></div>
+        <dl><div><dt data-i18n="access.name">Link name</dt><dd>Client review</dd></div><div><dt data-i18n="access.branch">Allowed branch</dt><dd class="mono"><i data-icon="branch"></i> main</dd></div><div><dt data-i18n="access.permissions">Permissions</dt><dd>Read-only <i data-icon="check"></i></dd></div><div><dt data-i18n="access.history">Change history</dt><dd data-i18n="access.allowed">Allowed <i data-icon="check"></i></dd></div><div><dt data-i18n="access.duration">Access duration</dt><dd data-i18n="duration.d7">7 days</dd></div></dl>
+        <div class="access-actions"><div class="toggle-row"><span id="pause-label" data-i18n="access.pause">Pause repository sharing</span><button class="switch" id="pause-switch" type="button" role="switch" aria-checked="false" aria-labelledby="pause-label"></button></div><button class="button button-danger" id="revoke-button" type="button"></button></div>
+        <p class="access-foot"><i data-icon="shield"></i><span id="access-note" role="status"></span></p>
+      </div>
+    </section>
+
+    <section class="faq-band" id="faq" aria-labelledby="faq-title"><div class="container section faq-section">
+      <div><p class="kicker" data-i18n="faq.kicker">GOOD TO KNOW</p><h2 id="faq-title" data-i18n="faq.title">Small details.<br><span data-i18n="faq.subtitle">Clear answers.</span></h2><p class="lead" data-i18n="faq.intro faq.introEnd">What you need to know before<br> sharing your first link.</p></div>
+      <div class="questions">
+        <details open><summary data-i18n="faq.q1">What is Glimpse?<i data-icon="chevron-down"></i></summary><p data-i18n="faq.a1">Glimpse is a space for sharing and exploring private GitHub and GitLab repositories. Each account connects its own GitHub or GitLab token and manages its own links, while visitors follow a link to browse permitted content in a simple web interface.</p></details>
+        <details><summary data-i18n="faq.q6">Does Glimpse work with GitLab?<i data-icon="chevron-down"></i></summary><p data-i18n="faq.a6">Yes. Connect GitLab.com or your own self-managed GitLab instance with a read_api token, alongside GitHub or on its own. Projects from both platforms appear in one list, and you can filter them by platform.</p></details>
+        <details><summary data-i18n="faq.q2">Do visitors need a GitHub or GitLab account?<i data-icon="chevron-down"></i></summary><p data-i18n="faq.a2">No. An active access link is all they need. Visitors can browse permitted files and branches directly in their browser, without signing in to GitHub or GitLab or installing tools.</p></details>
+        <details><summary data-i18n="faq.q7">How do I share a private GitHub repository without adding a collaborator?<i data-icon="chevron-down"></i></summary><p data-i18n="faq.a7">Connect your GitHub token in Glimpse, create an access link for the repository and send it. The visitor opens the link in a browser and reads the code without a GitHub account or a collaborator invitation. You can revoke the link at any time, and the same works for GitLab projects.</p></details>
+        <details><summary data-i18n="faq.q3">Can anyone change my code?<i data-icon="chevron-down"></i></summary><p data-i18n="faq.a3">Access through Glimpse is read-only: visitors cannot modify the repository or push commits. Anyone who can view content can also copy it, so only share links with people you trust.</p></details>
+        <details><summary data-i18n="faq.q4">How do I control the scope and duration of access?<i data-icon="chevron-down"></i></summary><p data-i18n="faq.a4">Choose a name, expiry date, allowed branches and history permissions for each link. Revoke a link or temporarily pause sharing for the entire repository. Expired or revoked links no longer open the content.</p></details>
+        <details><summary data-i18n="faq.q8">Can I share only one branch of a private repository?<i data-icon="chevron-down"></i></summary><p data-i18n="faq.a8">Yes. Each link lists the branches it may open, and you can also limit which files each branch shows. Other branches stay hidden, and new branches appear only after you allow them.</p></details>
+        <details><summary data-i18n="faq.q5">Does Glimpse clone my repository?<i data-icon="chevron-down"></i></summary><p data-i18n="faq.a5">No. Content is read through the GitHub or GitLab API, with a limited cache for faster browsing. Your tokens stay on the server and are never passed to visitors.</p></details>
+      </div>
+    </div></section>
+
+    <section class="container cta-wrap" aria-labelledby="cta-title"><div class="cta-section"><div class="cta-orb" aria-hidden="true"><i data-icon="eye"></i></div><p class="kicker" data-i18n="cta.kicker">GREAT WORK DESERVES TO BE SEEN.</p><h2 id="cta-title" data-i18n="cta.title">Give your code<br><span data-i18n="cta.subtitle">a new perspective.</span></h2><p class="lead" data-i18n="cta.body">One link is all it takes to start a conversation.</p><a class="button button-white button-large" href="/login" data-panel-link="" data-i18n="cta.open">Open Glimpse <i data-icon="arrow-up-right"></i></a><span class="cta-note" data-i18n="cta.note"><i data-icon="lock"></i> Private repository. Controlled access.</span></div></section>
+  </main>
+  <footer class="footer"><div class="container footer-inner"><div><a class="brand" href="#top" aria-label="Glimpse home" data-i18n-aria="nav.home"><span class="brand-mark"><i data-icon="eye"></i></span><span>glimpse<span class="brand-dot">.</span></span></a><p data-i18n="footer.tagline">Private code. Shared perspective.</p></div><span class="copyright">© <span id="year">2026</span> Glimpse · by <a href="https://finitysoftware.io">Finity Software</a></span><a class="back-to-top" href="#top" data-i18n="footer.top">Back to top <i data-icon="arrow-up-right"></i></a></div></footer>
+
+
+</body></html>

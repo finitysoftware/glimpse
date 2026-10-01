@@ -1,0 +1,42 @@
+/* The page of an access link around the repository browser. */
+.sharedPage {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 30px 24px;
+}
+.sharedHeader {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--a-text);
+  font-family: var(--a-display);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-right: auto;
+}
+.sharedHeader > span:nth-child(2) {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--a-muted);
+  font-size: 12px;
+}
+.sharedFooter {
+  color: var(--a-muted);
+  font-size: 11px;
+  text-align: center;
+  padding: 28px;
+}
+@media (max-width: 650px) {
+  .sharedPage {
+    padding: 22px 12px;
+  }
+}

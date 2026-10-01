@@ -1,0 +1,85 @@
+# Layers of backend/src, from the bottom up, and what each one may use. `composer deptrac` checks every class
+# dependency against this file; CI fails on a dependency that points up or sideways where it is not listed here.
+deptrac:
+  paths:
+    - ./src
+  layers:
+    - name: Core
+      collectors:
+        - type: classLike
+          value: ^Glimpse\\(Failure|FailureKind|Fields|Page|Settings)$
+    - name: Database
+      collectors:
+        - type: classLike
+          value: ^Glimpse\\Database\\
+    - name: Audit
+      collectors:
+        - type: classLike
+          value: ^Glimpse\\Audit\\
+    # Accounts and their sessions: passwords, usernames, sign-in, CSRF and rate limits.
+    - name: Identity
+      collectors:
+        - type: classLike
+          value: ^Glimpse\\(Accounts|Auth)\\
+    # What every platform shares: providers, transports, tokens, commit data and the repository client interface.
+    - name: Source
+      collectors:
+        - type: classLike
+          value: ^Glimpse\\Source\\
+    - name: Cache
+      collectors:
+        - type: classLike
+          value: ^Glimpse\\Cache\\
+    - name: Connections
+      collectors:
+        - type: classLike
+          value: ^Glimpse\\Connections\\
+    - name: Platforms
+      collectors:
+        - type: classLike
+          value: ^Glimpse\\(GitHub|GitLab)\\
+    - name: Repositories
+      collectors:
+        - type: classLike
+          value: ^Glimpse\\Repositories\\
+    - name: Visibility
+      collectors:
+        - type: classLike
+          value: ^Glimpse\\Visibility\\
+    - name: Sharing
+      collectors:
+        - type: classLike
+          value: ^Glimpse\\Sharing\\
+    - name: Admin
+      collectors:
+        - type: classLike
+          value: ^Glimpse\\Admin\\
+    - name: Http
+      collectors:
+        - type: classLike
+          value: ^Glimpse\\Http\\
+    - name: Cli
+      collectors:
+        - type: classLike
+          value: ^Glimpse\\Cli\\
+    # The API and the composition root that builds every service.
+    - name: Application
+      collectors:
+        - type: classLike
+          value: ^Glimpse\\(Application|Services)$
+  ruleset:
+    Core: ~
+    Database: [Core]
+    Audit: [Core, Database]
+    Identity: [Core, Database, Audit]
+    Source: [Core, Database]
+    Cache: [Core, Database, Source]
+    Connections: [Core, Database, Audit, Identity, Source, Cache]
+    Platforms: [+Connections]
+    Repositories: [+Platforms]
+    Visibility: [+Repositories]
+    Sharing: [+Repositories]
+    Admin: [+Sharing]
+    Http: [+Admin, +Visibility]
+    Cli: [+Admin, +Visibility]
+    Application: [+Http]

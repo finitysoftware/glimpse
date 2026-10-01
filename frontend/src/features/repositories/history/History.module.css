@@ -1,0 +1,312 @@
+.layout {
+  display: grid;
+  grid-template-columns: var(--pane-width, 320px) 6px minmax(0, 1fr);
+  border-top: 1px solid var(--a-border);
+  background: var(--a-panel);
+}
+.commits {
+  padding: 22px 14px;
+  border-right: 1px solid var(--a-border);
+  background: #fbfcfe;
+  min-width: 0;
+}
+.layout h2 {
+  font-size: 17px;
+  margin: 0 0 8px;
+  overflow-wrap: anywhere;
+}
+.subtitle,
+.layout p {
+  color: var(--a-muted);
+  font-size: 12px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+.subtitle {
+  margin-top: 0;
+}
+.timeline {
+  list-style: none;
+  margin: 24px 0;
+  padding: 0;
+  max-height: 620px;
+  overflow: auto;
+}
+.date {
+  margin: 18px 8px 8px;
+  font-size: 11px;
+}
+.commitButton {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 12px;
+  width: 100%;
+  border: 1px solid transparent;
+  border-left: 3px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--a-text);
+  text-align: left;
+  font: inherit;
+}
+.commitButton svg {
+  color: var(--a-faint);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.commitButton > span {
+  min-width: 0;
+}
+.commitButton strong {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.commitButton small {
+  display: block;
+  color: var(--a-muted);
+  font-size: 11px;
+  line-height: 1.5;
+  margin-top: 6px;
+  overflow-wrap: anywhere;
+}
+.commitButton:hover,
+.changedFile:hover {
+  background: var(--a-hover);
+}
+.commitButton[aria-current='true'] {
+  background: var(--a-blue-soft);
+  border-color: var(--a-blue-line);
+  border-left-color: var(--a-blue);
+}
+.commitButton[aria-current='true'] svg {
+  color: var(--a-blue);
+}
+.details {
+  padding: 22px 20px;
+  min-width: 0;
+}
+.detailHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.detailHeader > div {
+  min-width: 0;
+  flex: 1 1 260px;
+}
+.detailHeader p {
+  margin: 4px 0 12px;
+}
+.message {
+  white-space: pre-wrap;
+  max-height: 180px;
+  overflow: auto;
+}
+.parents {
+  margin: 14px 0;
+}
+.summary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+  margin: 18px 0 12px;
+  border-top: 1px solid var(--a-border);
+  padding-top: 18px;
+}
+.positive {
+  color: var(--a-green);
+  font-weight: 600;
+}
+.negative {
+  color: var(--a-red);
+  font-weight: 600;
+}
+.changedFiles {
+  max-height: 230px;
+  overflow: auto;
+  border: 1px solid var(--a-border);
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+.changedFile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 12px;
+  text-align: left;
+  color: var(--a-text);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--a-border);
+  font-size: 12px;
+}
+.changedFile:last-child {
+  border-bottom: 0;
+}
+.changedFile > svg {
+  flex-shrink: 0;
+  color: var(--a-faint);
+}
+.changedFile > span:first-of-type {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.changedFile small {
+  display: block;
+  font-size: 10px;
+  color: var(--a-muted);
+}
+.changedFile[aria-pressed='true'] {
+  background: var(--a-blue-soft);
+  box-shadow: inset 3px 0 var(--a-blue);
+}
+.pager {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 16px 0;
+}
+.pager span {
+  color: var(--a-muted);
+  font-size: 11px;
+  text-align: center;
+}
+.pager button {
+  padding: 9px 10px;
+}
+.patch {
+  border: 1px solid var(--a-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.patchHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  background: var(--a-surface);
+  border-bottom: 1px solid var(--a-border);
+  font-size: 12px;
+}
+.patchHeader strong {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.patchHeader button {
+  flex-shrink: 0;
+  padding: 8px 10px;
+}
+.layout .notice {
+  padding: 10px 12px;
+  background: var(--a-amber-soft);
+  border-left: 2px solid var(--a-amber);
+  color: var(--a-amber-dark);
+  font-size: 12px;
+}
+.empty {
+  padding: 20px 0;
+}
+.diffMeta {
+  padding: 0 12px;
+  font-size: 10px;
+}
+.diff {
+  padding: 0;
+  height: 440px;
+  max-height: 60vh;
+  overflow: auto;
+  font: 12px/24px var(--a-mono);
+}
+.diffCanvas {
+  position: relative;
+}
+.diffLine {
+  height: 24px;
+  display: flex;
+  white-space: pre;
+}
+.lineNumber {
+  width: 6ch;
+  flex-shrink: 0;
+  text-align: right;
+  padding-right: 1ch;
+  color: var(--a-faint);
+  user-select: none;
+}
+.marker {
+  width: 3ch;
+  flex-shrink: 0;
+  text-align: center;
+  user-select: none;
+}
+.diffLine code {
+  padding-right: 2ch;
+}
+.added {
+  background: #eaf8f1;
+}
+.removed {
+  background: #fdf0f0;
+}
+.added .marker {
+  color: var(--a-green);
+}
+.removed .marker {
+  color: var(--a-red);
+}
+.hunk {
+  background: var(--a-blue-soft);
+  color: var(--a-blue-dark);
+}
+.context {
+  background: var(--a-panel);
+}
+.layout button:focus-visible,
+.diff:focus-visible {
+  outline: 2px solid var(--a-blue);
+  outline-offset: -2px;
+}
+@media (max-width: 900px) {
+  .details {
+    padding: 18px 14px;
+  }
+}
+@media (max-width: 760px) {
+  .layout {
+    display: block;
+  }
+  .commits {
+    border-right: 0;
+    border-bottom: 1px solid var(--a-border);
+    padding: 18px 12px;
+  }
+  .timeline {
+    max-height: 260px;
+    margin: 12px 0;
+  }
+  .details {
+    padding: 20px 12px;
+  }
+  .patchHeader {
+    flex-wrap: wrap;
+  }
+  .changedFile {
+    gap: 7px;
+  }
+  .summary {
+    gap: 12px;
+  }
+}

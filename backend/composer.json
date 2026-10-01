@@ -1,0 +1,40 @@
+{
+  "name": "finitysoftware/glimpse",
+  "description": "Private GitHub and GitLab repository viewer API",
+  "type": "project",
+  "license": "MIT",
+  "require": {
+    "php": "~8.5.0",
+    "ext-curl": "*",
+    "ext-mbstring": "*",
+    "ext-pdo": "*",
+    "ext-pdo_mysql": "*",
+    "ext-openssl": "*",
+    "slim/slim": "^4.15",
+    "slim/psr7": "^1.8"
+  },
+  "require-dev": {
+    "deptrac/deptrac": "^4.7",
+    "friendsofphp/php-cs-fixer": "^3.95",
+    "phpstan/phpstan": "^2.1",
+    "phpunit/phpunit": "^12.0"
+  },
+  "autoload": { "psr-4": { "Glimpse\\": "src/" } },
+  "autoload-dev": { "psr-4": { "Glimpse\\Tests\\": "tests/" } },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {},
+    "platform": { "php": "8.5.13" }
+  },
+  "scripts": {
+    "lint": "@php bin/lint.php",
+    "format": "php-cs-fixer fix",
+    "format:check": "php-cs-fixer fix --dry-run --diff",
+    "analyse": "phpstan analyse --memory-limit=256M",
+    "deptrac": "deptrac analyse --no-progress",
+    "test": "phpunit --testsuite unit",
+    "test:integration": "phpunit --testsuite integration",
+    "migrate": "@php bin/migrate.php",
+    "preflight": "@php bin/preflight.php"
+  }
+}

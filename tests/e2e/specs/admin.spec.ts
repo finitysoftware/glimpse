@@ -1,0 +1,118 @@
+import { expect, test, type Page } from '@playwright/test'
+
+test.skip(!process.env.GLIMPSE_TEST_DB_DSN, 'A dedicated MySQL/MariaDB database is required.')
+
+async function adminSignIn(page: Page) {
+  await page.goto('/admin')
+  await expect(page).toHaveURL(/\/admin\/login\?returnTo=%2Fadmin$/)
+  await page.getByLabel('Username').fill('e2e.admin')
+  await page.getByLabel('Password', { exact: true }).fill('local-e2e-admin-password')
+  await page.getByRole('button', { name: 'Sign in', exact: true }).click()
+  await expect(page.getByRole('heading', { name: /^Good (morning|afternoon|evening), e2e\.admin$/ })).toBeVisible()
+}
+
+test('administrator reviews the dashboard, shows a token and manages an account', async ({ page }, testInfo) => {
+  await adminSignIn(page)
+  await expect(page.getByRole('region', { name: 'System' })).toContainText('Up to date')
+  await expect(page.getByRole('img', { name: /Workspace sign-ins and link opens/ })).toBeVisible()
+  await page.screenshot({ path: testInfo.outputPath('admin-dashboard.png'), fullPage: true })
+
+  await page.getByRole('link', { name: 'Users', exact: true }).click()
+  const owner = page.getByRole('row', { name: /e2e\.owner/ })
+  await expect(owner).toContainText('Connected')
+  await expect(page.getByRole('button', { name: 'Delete e2e.admin' })).toBeDisabled()
+  await owner.getByRole('button', { name: 'Edit e2e.owner' }).click()
+  const edit = page.getByRole('dialog', { name: 'Edit user' })
+  const token = edit.getByLabel('GitHub token', { exact: true })
+  await expect(token).toHaveAttribute('type', 'password')
+  await expect(token).toHaveValue('')
+  await edit.getByRole('button', { name: 'Show GitHub token' }).click()
+  await expect(token).toHaveValue('fixture_token_for_e2e.owner')
+  await page.screenshot({ path: testInfo.outputPath('admin-edit-user.png'), fullPage: true })
+  await edit.getByRole('button', { name: 'Cancel' }).click()
+  await expect(edit).toHaveCount(0)
+
+  // A new account: generated password, then deactivated with the checkbox, then deleted.
+  await page.getByRole('button', { name: 'Add user' }).click()
+  const add = page.getByRole('dialog', { name: 'Add user' })
+  await add.getByLabel('First name').fill('Temporary')
+  await add.getByLabel('Last name').fill('Member')
+  await add.getByLabel('Email').fill('temporary@example.com')
+  await add.getByLabel('Username').fill('e2e.temporary')
+  await add.getByRole('button', { name: 'Generate' }).click()
+  await expect(add.getByLabel('Password', { exact: true })).toHaveAttribute('type', 'text')
+  await add.getByRole('button', { name: 'Create' }).click()
+  await expect(page.getByRole('status')).toContainText('Temporary Member was saved.')
+  const row = page.getByRole('row', { name: /Temporary Member/ })
+  await expect(row).toContainText('temporary@example.com')
+  await row.getByRole('button', { name: 'Edit Temporary Member' }).click()
+  await page.getByRole('dialog', { name: 'Edit user' }).getByLabel('Account is active').uncheck()
+  await page.getByRole('dialog', { name: 'Edit user' }).getByRole('button', { name: 'Save' }).click()
+  await expect(row).toContainText('Deactivated')
+  await row.getByRole('button', { name: 'Delete Temporary Member' }).click()
+  const confirm = page.getByRole('alertdialog', { name: 'Delete user' })
+  await expect(confirm.getByRole('button', { name: 'Cancel' })).toBeFocused()
+  await confirm.getByRole('button', { name: 'Delete', exact: true }).click()
+  await expect(page.getByRole('row', { name: /Temporary Member/ })).toHaveCount(0)
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.getByRole('button', { name: 'Collapse sidebar', exact: true }).click()
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
+  await page.screenshot({ path: testInfo.outputPath('admin-users-mobile.png'), fullPage: true })
+})
+
+test('administrator creates an account with a token, shows and revokes its link and deletes it', async ({ page, browser }, testInfo) => {
+  await adminSignIn(page)
+  await page.getByRole('link', { name: 'Users', exact: true }).click()
+  await page.getByRole('button', { name: 'Add user' }).click()
+  const add = page.getByRole('dialog', { name: 'Add user' })
+  await add.getByLabel('First name').fill('Link')
+  await add.getByLabel('Last name').fill('Owner')
+  await add.getByLabel('Username').fill('e2e.linker')
+  await add.getByLabel('Password', { exact: true }).fill('local-e2e-linker-password')
+  await add.getByLabel('GitHub token', { exact: true }).fill('fixture_token_for_linker')
+  await add.getByRole('button', { name: 'Create' }).click()
+  const row = page.getByRole('row', { name: /Link Owner/ })
+  await expect(row).toContainText('Connected')
+
+  // The new account creates a link in its own workspace; the administrator's session is separate.
+  const workspace = await browser.newContext()
+  let url = ''
+  try {
+    const owner = await workspace.newPage()
+    await owner.goto('/app')
+    await owner.getByLabel('Username').fill('e2e.linker')
+    await owner.getByLabel('Password', { exact: true }).fill('local-e2e-linker-password')
+    await owner.getByRole('button', { name: 'Sign in', exact: true }).click()
+    await owner.getByRole('link', { name: /fixture\/alpha/ }).click()
+    await owner.getByRole('button', { name: 'Access links', exact: true }).click()
+    await owner.getByLabel('Link name').fill('Admin review')
+    await owner.getByRole('radiogroup', { name: 'File visibility for main' }).getByRole('radio', { name: 'Entire branch' }).check()
+    await owner.getByRole('button', { name: 'Create link', exact: true }).click()
+    url = await owner.getByLabel('Access URL').inputValue()
+  } finally { await workspace.close() }
+
+  await row.getByRole('button', { name: 'Access links of Link Owner' }).click()
+  await expect(page).toHaveURL(/\/admin\/links\?user=\d+$/)
+  await expect(page.getByText('Links of Link Owner')).toBeVisible()
+  const link = page.getByRole('row', { name: /Admin review/ })
+  await link.getByRole('button', { name: 'Show' }).click()
+  await expect(page.getByLabel('Access URL')).toHaveValue(url)
+  await page.screenshot({ path: testInfo.outputPath('admin-links.png'), fullPage: true })
+  await link.getByRole('button', { name: 'Revoke' }).click()
+  await page.getByRole('alertdialog', { name: 'Revoke link' }).getByRole('button', { name: 'Revoke', exact: true }).click()
+  await expect(link).toContainText('Revoked')
+  const visitor = await browser.newContext()
+  try {
+    const shared = await visitor.newPage()
+    await shared.goto(url)
+    await expect(shared.getByRole('alert')).toContainText('invalid, expired, revoked, or unavailable')
+  } finally { await visitor.close() }
+
+  // Deleting the account removes it together with its token, repository and links.
+  await page.getByRole('link', { name: 'Users', exact: true }).click()
+  await page.getByRole('row', { name: /Link Owner/ }).getByRole('button', { name: 'Delete Link Owner' }).click()
+  await page.getByRole('alertdialog', { name: 'Delete user' }).getByRole('button', { name: 'Delete', exact: true }).click()
+  await expect(page.getByRole('row', { name: /Link Owner/ })).toHaveCount(0)
+  await page.getByRole('link', { name: 'Access links', exact: true }).click()
+  await expect(page.getByRole('row', { name: /Admin review/ })).toHaveCount(0)
+})

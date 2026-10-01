@@ -1,0 +1,79 @@
+name: Deploy over FTPS
+
+# Publishes exactly the package that "Verify Glimpse" built and tested, over FTPS (scripts/deploy-ftp.sh).
+# Only manual: Actions > Deploy over FTPS > Run workflow. Without a commit it publishes the latest successful
+# Verify Glimpse run of a push to master; with one, the successful run of that commit.
+on:
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: 'Commit to publish (empty: the latest tested commit on master)'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: deploy-ftps
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    # Add required reviewers to this environment in the repository settings to approve every deployment.
+    environment: production
+    steps:
+      - name: Choose the tested run
+        id: run
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMIT: ${{ inputs.commit }}
+        run: |
+          if [ -n "$COMMIT" ] && ! [[ "$COMMIT" =~ ^[0-9a-f]{7,40}$ ]]; then echo "::error::The commit must be a hexadecimal SHA."; exit 1; fi
+          gh run list --repo "$GITHUB_REPOSITORY" --workflow ci.yml --branch master --event push --status success \
+            --limit 100 --json databaseId,headSha > runs.json
+          read -r id sha < <(jq -r --arg commit "$COMMIT" \
+            '([.[] | select(.headSha | startswith($commit))][0] // empty) | "\(.databaseId) \(.headSha)"' runs.json) || true
+          if [ -z "${id:-}" ] || [ -z "${sha:-}" ]; then echo "::error::No successful Verify Glimpse run on master${COMMIT:+ for $COMMIT}."; exit 1; fi
+          echo "Publishing $sha (Verify Glimpse run $id)" | tee -a "$GITHUB_STEP_SUMMARY"
+          echo "id=$id" >> "$GITHUB_OUTPUT"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.run.outputs.sha }}
+          fetch-depth: 0
+      - name: Download the tested package
+        uses: actions/download-artifact@v4
+        with:
+          name: glimpse-production-candidate
+          path: candidate
+          run-id: ${{ steps.run.outputs.id }}
+          github-token: ${{ github.token }}
+      - name: Check the package
+        run: |
+          shopt -s nullglob
+          releases=(candidate/*/)
+          if [ ${#releases[@]} -ne 1 ]; then echo "::error::Expected exactly one release in the artifact."; exit 1; fi
+          release="${releases[0]%/}"
+          for path in .htaccess public/.htaccess public/index.html public/workspace.html public/api/index.php private/.htaccess private/backend/vendor/autoload.php; do
+            if [ ! -f "$release/$path" ]; then echo "::error::The package is missing $path."; exit 1; fi
+          done
+          echo "RELEASE=$release" >> "$GITHUB_ENV"
+      - name: Install lftp
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+      - name: Upload over FTPS
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_REMOTE_DIR: ${{ vars.FTP_REMOTE_DIR || '/' }}
+          FTP_TLS_VERIFY: ${{ vars.FTP_TLS_VERIFY || 'yes' }}
+          DEPLOY_SHA: ${{ steps.run.outputs.sha }}
+        run: |
+          if [ -z "$FTP_HOST" ] || [ -z "$FTP_USERNAME" ] || [ -z "$LFTP_PASSWORD" ]; then
+            echo "::error::Add the FTP_HOST, FTP_USERNAME and FTP_PASSWORD secrets (see the Deployment section of the README)."; exit 1
+          fi
+          bash scripts/deploy-ftp.sh

@@ -1,0 +1,78 @@
+.meta {
+  padding: 10px 20px;
+  color: var(--a-muted);
+  font-size: 11px;
+}
+.code {
+  margin: 0;
+  padding: 20px;
+  background: var(--a-panel);
+  color: var(--a-text-2);
+  font: 13px/1.75 var(--a-mono);
+  max-height: 65vh;
+  overflow: auto;
+  tab-size: 4;
+}
+.code code {
+  font: inherit;
+}
+.code :global(.hljs-comment),
+.code :global(.hljs-quote) {
+  color: var(--a-faint);
+  font-style: italic;
+}
+.code :global(.hljs-keyword),
+.code :global(.hljs-selector-tag),
+.code :global(.hljs-doctag) {
+  color: #7a3ee0;
+}
+.code :global(.hljs-string),
+.code :global(.hljs-regexp),
+.code :global(.hljs-addition) {
+  color: #0b7a52;
+}
+.code :global(.hljs-number),
+.code :global(.hljs-literal),
+.code :global(.hljs-symbol),
+.code :global(.hljs-bullet) {
+  color: #b35900;
+}
+.code :global(.hljs-title),
+.code :global(.hljs-section),
+.code :global(.hljs-selector-id),
+.code :global(.hljs-selector-class) {
+  color: #2555f0;
+}
+.code :global(.hljs-type),
+.code :global(.hljs-built_in),
+.code :global(.hljs-title.class_) {
+  color: #0b7285;
+}
+.code :global(.hljs-attr),
+.code :global(.hljs-attribute),
+.code :global(.hljs-property),
+.code :global(.hljs-variable),
+.code :global(.hljs-template-variable) {
+  color: #953800;
+}
+.code :global(.hljs-tag),
+.code :global(.hljs-name) {
+  color: #2555f0;
+}
+.code :global(.hljs-meta),
+.code :global(.hljs-link) {
+  color: #5b6780;
+}
+.code :global(.hljs-subst),
+.code :global(.hljs-params) {
+  color: var(--a-text-2);
+}
+.code :global(.hljs-deletion) {
+  color: #a3262b;
+}
+.code :global(.hljs-emphasis) {
+  font-style: italic;
+}
+.code :global(.hljs-strong) {
+  font-weight: 700;
+}

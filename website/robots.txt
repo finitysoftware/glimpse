@@ -1,0 +1,6 @@
+# Only the landing page belongs in search results. Sign-in, the workspace, the admin panel and access
+# links answer with noindex and stay crawlable so that crawlers can see it. The API is never crawled.
+User-agent: *
+Disallow: /api/
+
+Sitemap: https://glimpse.finitysoftware.io/sitemap.xml

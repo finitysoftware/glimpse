@@ -1,0 +1,33 @@
+/* The sign-in page and the password form; their card and fields are shared in src/styles/app.module.css. */
+.loginBrand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--a-display);
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 30px;
+}
+.subtitle {
+  font-size: 14px;
+  color: var(--a-muted);
+  text-align: center;
+  margin-bottom: 28px;
+}
+.wordmarkFootnote {
+  font-size: 11px;
+  color: var(--a-muted);
+  margin-top: 26px;
+}
+.passwordForm {
+  max-width: 460px;
+  margin-top: 16px;
+}
+.passwordForm label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}

@@ -1,0 +1,120 @@
+name: Release
+
+# Runs when a version tag is pushed (git tag v1.2.0 && git push origin v1.2.0). Publishes the package that
+# "Verify Glimpse" built and tested for the tagged commit on master as a GitHub Release: glimpse-<version>.zip
+# (extract it into the site's document root) and its SHA-256. Push master first and wait for Verify Glimpse to pass;
+# if the tag arrives earlier, re-run this workflow once it has.
+on:
+  push:
+    tags: ['v[0-9].[0-9].[0-9]']
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Read the tag
+        id: version
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          if ! [[ "$version" =~ ^[0-9]\.[0-9]\.[0-9]$ ]]; then echo "::error::The tag must be v and three single digits, e.g. v1.2.0."; exit 1; fi
+          sha="$(git rev-parse "$GITHUB_REF^{commit}")"
+          # The latest version tag before this commit, for the release notes.
+          previous="$(git describe --tags --abbrev=0 --match 'v[0-9].[0-9].[0-9]' "$sha^" 2>/dev/null || true)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "previous=$previous" >> "$GITHUB_OUTPUT"
+      - name: Choose the tested run
+        id: run
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+          SHA: ${{ steps.version.outputs.sha }}
+        run: |
+          if gh release view "v$VERSION" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            echo "::error::Release v$VERSION already exists."; exit 1
+          fi
+          # A run started by a push or by hand on master tests a master commit; pull request runs test something else.
+          gh run list --repo "$GITHUB_REPOSITORY" --workflow ci.yml --branch master --status success \
+            --limit 100 --json databaseId,headSha,event > runs.json
+          id="$(jq -r --arg sha "$SHA" \
+            '[.[] | select(.event == "push" or .event == "workflow_dispatch") | select(.headSha == $sha)][0].databaseId // empty' runs.json)"
+          if [ -z "$id" ]; then
+            echo "::error::No successful Verify Glimpse run on master for ${SHA:0:7} in the last 7 days. Push master, wait for it to pass, then re-run this workflow."
+            exit 1
+          fi
+          echo "id=$id" >> "$GITHUB_OUTPUT"
+      - name: Download the tested package
+        uses: actions/download-artifact@v4
+        with:
+          name: glimpse-production-candidate
+          path: candidate
+          run-id: ${{ steps.run.outputs.id }}
+          github-token: ${{ github.token }}
+      - name: Pack the zip
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          shopt -s nullglob
+          releases=(candidate/*/)
+          if [ ${#releases[@]} -ne 1 ]; then echo "::error::Expected exactly one release in the artifact."; exit 1; fi
+          release="${releases[0]%/}"
+          for path in .htaccess public/.htaccess public/index.html public/workspace.html public/api/index.php private/.htaccess private/backend/vendor/autoload.php; do
+            if [ ! -f "$release/$path" ]; then echo "::error::The package is missing $path."; exit 1; fi
+          done
+          # The zip holds the contents of the document root, not the folder itself.
+          (cd "$release" && zip -qr -X "$GITHUB_WORKSPACE/glimpse-$VERSION.zip" .htaccess public private)
+          sha256sum "glimpse-$VERSION.zip" > "glimpse-$VERSION.zip.sha256"
+          unzip -l "glimpse-$VERSION.zip" | tail -n 1
+      - name: Write the release notes
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          PREVIOUS: ${{ steps.version.outputs.previous }}
+          SHA: ${{ steps.version.outputs.sha }}
+          RUN_ID: ${{ steps.run.outputs.id }}
+        run: |
+          {
+            echo "Tested package of commit \`${SHA:0:7}\` ([Verify Glimpse run]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$RUN_ID))."
+            echo
+            migrations=""
+            if [ -n "$PREVIOUS" ]; then
+              migrations="$(git diff --name-only "$PREVIOUS" "$SHA" -- backend/migrations)"
+              echo "### Changes since $PREVIOUS"
+              git log --no-merges --format='- %s (%h)' "$PREVIOUS..$SHA"
+              echo
+            fi
+            echo "### Database"
+            if [ -z "$PREVIOUS" ]; then
+              echo "First release: \`php bin/migrate.php --status\` in \`private/backend\` shows whether the server needs any migration."
+            elif [ -n "$migrations" ]; then
+              echo "This version has migrations that are not in the previous release; run \`php bin/migrate.php\` in \`private/backend\` after uploading:"
+              echo "$migrations" | sed 's/^/- `/; s/$/`/'
+            else
+              echo "No new migrations."
+            fi
+            echo
+            echo "### Installing"
+            echo "Extract \`glimpse-$VERSION.zip\` into the site's document root over the existing files."
+            echo "Never delete \`private/backend/config\`: the settings and keys there are not part of the package."
+          } > notes.md
+          cat notes.md
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+          SHA: ${{ steps.version.outputs.sha }}
+        run: |
+          gh release create "v$VERSION" "glimpse-$VERSION.zip" "glimpse-$VERSION.zip.sha256" --repo "$GITHUB_REPOSITORY" \
+            --verify-tag --title "Glimpse $VERSION" --notes-file notes.md --latest
+          echo "Released [Glimpse $VERSION]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/tag/v$VERSION) from \`${SHA:0:7}\`." >> "$GITHUB_STEP_SUMMARY"

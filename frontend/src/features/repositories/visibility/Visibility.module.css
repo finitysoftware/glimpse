@@ -1,0 +1,200 @@
+/* File visibility of a branch: mode, progress, warnings and the save bar. */
+.visibilityHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.visibilityHeadActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px;
+  border-radius: 20px;
+  border: 1px solid;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.statusSaved {
+  color: var(--a-green-dark);
+  background: var(--a-green-soft);
+  border-color: var(--a-green-line);
+}
+.statusPending {
+  color: var(--a-amber-dark);
+  background: var(--a-amber-soft);
+  border-color: var(--a-amber-line);
+}
+.statusMuted {
+  color: var(--a-muted);
+  background: var(--a-panel);
+  border-color: var(--a-border-strong);
+}
+.statusProgress {
+  color: var(--a-blue-dark);
+  background: var(--a-blue-soft);
+  border-color: var(--a-blue-line);
+}
+.visibilityProgress {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.visibilityProgress p {
+  margin: 0;
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+.visibilityProgress b {
+  font-weight: 600;
+}
+.progressBar {
+  flex: 1;
+  display: flex;
+  height: 6px;
+  min-width: 60px;
+  border-radius: 6px;
+  background: var(--a-surface-2);
+  overflow: hidden;
+}
+.progressBar i {
+  display: block;
+  height: 100%;
+  background: var(--a-blue);
+  transition: width 0.2s;
+}
+.progressBar .progressPending {
+  background: repeating-linear-gradient(45deg, #9db7ff 0 4px, #7d9cff 4px 8px);
+}
+.visibilityHelp summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  list-style: none;
+  color: var(--a-blue-dark);
+  font-size: 12px;
+  font-weight: 600;
+}
+.visibilityHelp summary::-webkit-details-marker {
+  display: none;
+}
+.visibilityHelp summary svg {
+  color: var(--a-blue);
+}
+.visibilityHelp ul {
+  display: grid;
+  gap: 8px;
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 12px 14px;
+  border: 1px solid var(--a-border);
+  border-radius: 10px;
+  background: var(--a-panel);
+}
+.visibilityHelp li {
+  display: flex;
+  gap: 9px;
+  color: var(--a-text-2);
+  font-size: 12px;
+  line-height: 1.45;
+}
+.visibilityHelp li svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--a-faint);
+}
+.visibilityNote {
+  margin: 0;
+  color: var(--a-muted);
+  font-size: 12.5px;
+}
+.visibilityMessage {
+  margin: 0;
+  color: var(--a-green-dark);
+  font-size: 12.5px;
+}
+.saveBar {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  padding: 12px 20px;
+  border-top: 1px solid var(--a-amber-line);
+  background: var(--a-amber-soft);
+  box-shadow: 0 -10px 24px -16px rgba(16, 24, 40, 0.25);
+}
+.saveBarText {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--a-muted);
+}
+.saveBarText svg {
+  color: var(--a-amber);
+  flex-shrink: 0;
+}
+.saveBarText b {
+  color: var(--a-amber-dark);
+  font-weight: 600;
+}
+.saveBarText span {
+  overflow-wrap: anywhere;
+}
+.saveBarActions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+.saveBarError {
+  flex-basis: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  color: var(--a-red-dark);
+  font-size: 12.5px;
+}
+.saveBarError p {
+  margin: 0;
+}
+@media (max-width: 699px) {
+  .visibilityHead {
+    flex-wrap: wrap;
+  }
+  .visibilityHeadActions {
+    margin-left: 46px;
+  }
+  .visibilityProgress {
+    flex-wrap: wrap;
+  }
+  .visibilityProgress p {
+    white-space: normal;
+  }
+  .progressBar {
+    flex-basis: 100%;
+  }
+  .saveBar {
+    padding: 12px 16px;
+  }
+}

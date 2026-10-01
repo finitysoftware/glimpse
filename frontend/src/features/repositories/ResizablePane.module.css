@@ -1,0 +1,23 @@
+.separator {
+  width: 6px;
+  cursor: col-resize;
+  touch-action: none;
+  /* The pane beside it already draws the dividing line; the handle only shows on hover and focus. */
+  background: transparent;
+  position: relative;
+}
+.separator::after {
+  content: '';
+  position: absolute;
+  inset: 0 -3px;
+}
+.separator:hover,
+.separator:focus-visible {
+  background: var(--a-blue);
+  outline: none;
+}
+@media (max-width: 760px) {
+  .separator {
+    display: none;
+  }
+}

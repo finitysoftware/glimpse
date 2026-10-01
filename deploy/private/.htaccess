@@ -1,0 +1,2 @@
+# Deny HTTP access while allowing PHP to load private files from disk.
+Require all denied

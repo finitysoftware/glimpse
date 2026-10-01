@@ -1,0 +1,99 @@
+name: Verify Glimpse
+
+on:
+  # Branch pushes only: a version tag starts release.yml, which reuses the run of the tagged master commit.
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    services:
+      mariadb:
+        image: mariadb:11.4.12
+        env:
+          MARIADB_ROOT_PASSWORD: local-ci-password
+          MARIADB_DATABASE: glimpse_test
+        ports: ['3306:3306']
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s --health-timeout=5s --health-retries=10
+    env:
+      GLIMPSE_TEST_DB_DSN: mysql:host=127.0.0.1;port=3306;dbname=glimpse_test;charset=utf8mb4
+      GLIMPSE_TEST_DB_USER: root
+      GLIMPSE_TEST_DB_PASSWORD: local-ci-password
+      GLIMPSE_TEST_DB_RESET: '1'
+    steps:
+      - uses: actions/checkout@v4
+      # The pnpm version comes from packageManager in the root package.json.
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5.13'
+          extensions: curl, mbstring, pdo_mysql, openssl, dom, xml, xmlwriter
+          tools: composer:2.10.3
+          coverage: none
+      - name: Install locked dependencies
+        run: |
+          pnpm install --frozen-lockfile
+          composer install --working-dir=backend --no-interaction --prefer-dist
+      - name: Frontend checks
+        working-directory: frontend
+        run: |
+          pnpm run format:check
+          pnpm run lint
+          pnpm run typecheck
+          pnpm test
+          pnpm run build
+          pnpm audit --audit-level=high
+      - name: PHP checks
+        working-directory: backend
+        run: |
+          composer validate --strict
+          composer check-platform-reqs
+          composer audit
+          composer preflight
+          composer lint
+          composer format:check
+          composer analyse
+          composer deptrac
+          composer test
+          composer test:integration
+          php tests/benchmarks/cache.php
+      - name: Browser checks against Slim and MariaDB
+        working-directory: tests/e2e
+        run: |
+          pnpm run typecheck
+          pnpm exec playwright install --with-deps chromium
+          pnpm test
+      - name: Build and inspect production candidate
+        run: |
+          node scripts/package.mjs
+          node scripts/smoke-package.mjs
+          node tests/e2e/check-built-syntax.mjs
+      - name: Upload production candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: glimpse-production-candidate
+          path: artifacts/releases/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+      - name: Upload browser report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-report
+          path: tests/e2e/playwright-report/
+          retention-days: 7
