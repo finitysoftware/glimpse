@@ -106,7 +106,8 @@ try {
   assert.equal(Math.round((await page.getByRole('complementary', { name: 'Commit history' }).boundingBox()).width), 220)
   await page.getByRole('complementary', { name: 'Commit history' }).getByRole('button', { name: /Improve startup/ }).click()
   await expect(divider).toHaveAttribute('aria-valuenow', '220')
-  assert.equal(Math.round((await page.getByRole('complementary', { name: 'Commit history' }).boundingBox()).width), 220)
+  // Opening a commit starts the preview again, so the panel is measured once it is back.
+  await expect.poll(async () => Math.round((await page.getByRole('complementary', { name: 'Commit history' }).boundingBox())?.width ?? 0)).toBe(220)
   await page.setViewportSize({ width: 390, height: 844 })
   assert(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
   await page.setViewportSize({ width: 1280, height: 900 })

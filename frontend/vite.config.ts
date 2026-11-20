@@ -8,6 +8,9 @@ export default defineConfig({
     strictPort: true,
     proxy: { '/api': { target: 'http://127.0.0.1:8080', changeOrigin: false } },
   },
+  // The dependency scan does not follow workers. Without the worker as an entry, opening the first file finds new
+  // dependencies and reloads the page in the dev server.
+  optimizeDeps: { entries: ['index.html', 'src/features/repositories/syntax/highlight-worker.ts'] },
   build: { sourcemap: false },
   test: {
     environment: 'jsdom',
