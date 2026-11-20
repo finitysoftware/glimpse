@@ -21,6 +21,7 @@
 <p align="center">
   <a href="https://glimpse.finitysoftware.io">Website</a> |
   <a href="https://github.com/finitysoftware/glimpse/releases">Releases</a> |
+  <a href="docs/manual/README.md">User manual</a> |
   <a href="#installation">Installation</a> |
   <a href="#development">Development</a>
 </p>
@@ -43,6 +44,12 @@ GitHub and GitLab APIs and caches it briefly in its database. It is developed by
 | **Accounts** | Username and password sign-in, with accounts created in the admin panel or from the CLI |
 | **Admin panel** | Platform overview, users, their connections and links |
 | **Landing page** | A static, SEO-ready page in English and Serbo-Croatian |
+
+## User manual
+
+The [user manual](docs/manual/README.md) walks through every part of Glimpse with screenshots: signing in, connecting
+GitHub and GitLab, browsing repositories and history, choosing file visibility, creating access links, what visitors
+see, and the admin panel.
 
 ## Requirements
 
@@ -215,6 +222,7 @@ stays on: run `php bin/migrate.php`, then `php bin/maintenance-mode.php off` ove
 | `deploy` | `.htaccess` rules for routing, protecting `private/` and security headers |
 | `scripts` | Building, checking and uploading the package |
 | `tests/e2e` | Playwright browser tests |
+| `docs/manual` | The user manual and its screenshots |
 
 | Path | What is there |
 |---|---|
