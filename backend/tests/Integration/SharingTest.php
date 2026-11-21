@@ -663,7 +663,10 @@ final class SharingTest extends TestCase
         return $matches[1];
     }
 
-    /** @param array<string, mixed>|null $body */
+    /**
+     * @param array<string, mixed>|null $body
+     * @phpstan-impure
+     */
     private function send(string $method, string $path, ?array $body = null, bool $admin = false, ?string $visitor = null, ?string $csrf = null, ?string $origin = null, ?string $workspace = null, ?string $host = null): ResponseInterface
     {
         $request = (new ServerRequestFactory())->createServerRequest($method, $path, ['REMOTE_ADDR' => '127.0.0.1']);

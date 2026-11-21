@@ -30,10 +30,10 @@ jobs:
       GLIMPSE_TEST_DB_PASSWORD: local-ci-password
       GLIMPSE_TEST_DB_RESET: '1'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       # The pnpm version comes from packageManager in the root package.json.
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .node-version
           cache: pnpm
@@ -42,7 +42,7 @@ jobs:
         with:
           php-version: '8.5.13'
           extensions: curl, mbstring, pdo_mysql, openssl, dom, xml, xmlwriter
-          tools: composer:2.10.3
+          tools: composer:2.11.2
           coverage: none
       - name: Install locked dependencies
         run: |
@@ -83,7 +83,7 @@ jobs:
           node scripts/smoke-package.mjs
           node tests/e2e/check-built-syntax.mjs
       - name: Upload production candidate
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: glimpse-production-candidate
           path: artifacts/releases/
@@ -92,7 +92,7 @@ jobs:
           retention-days: 7
       - name: Upload browser report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: browser-report
           path: tests/e2e/playwright-report/

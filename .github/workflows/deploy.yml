@@ -41,12 +41,12 @@ jobs:
           echo "Publishing $sha (Verify Glimpse run $id)" | tee -a "$GITHUB_STEP_SUMMARY"
           echo "id=$id" >> "$GITHUB_OUTPUT"
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ steps.run.outputs.sha }}
           fetch-depth: 0
       - name: Download the tested package
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: glimpse-production-candidate
           path: candidate

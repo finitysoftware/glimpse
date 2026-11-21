@@ -56,7 +56,7 @@ see, and the admin panel.
 - PHP 8.5 with `curl`, `mbstring`, `openssl` and `pdo_mysql` (`php backend/bin/preflight.php` checks them)
 - MariaDB or MySQL
 - Apache with `mod_rewrite` and HTTPS
-- For development: Node.js 24, pnpm 11 and Composer 2
+- For development: Node.js 26, pnpm 12 and Composer 2
 
 ## Installation
 

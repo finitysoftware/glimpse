@@ -129,6 +129,8 @@ final class PreviewCacheTest extends TestCase
         }
         self::assertSame(0, $this->number('SELECT COUNT(*) FROM api_cache'));
     }
+
+    /** @phpstan-impure */
     private function number(string $sql): int
     {
         $read = $this->pdo->prepare($sql);

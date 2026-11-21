@@ -396,7 +396,10 @@ final class LinkPolicyTest extends TestCase
         return $this->data($response);
     }
 
-    /** @param array{id: string, secret: string} $link */
+    /**
+     * @param array{id: string, secret: string} $link
+     * @phpstan-impure
+     */
     private function visitRaw(array $link, string $visitor, string $query): ResponseInterface
     {
         $request = (new ServerRequestFactory())->createServerRequest('GET', '/api/shares/' . $link['id'] . '/browse' . $query, ['REMOTE_ADDR' => '127.0.0.1']);
